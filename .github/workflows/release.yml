@@ -31,7 +31,13 @@ jobs:
           python-version: '3.11'
 
       - name: Bake the companion app + its arm64 wheels into the plugin (a plugin that needs it ships build.sh)
-        run: 'for dir in */; do [ -f "${dir}build.sh" ] && sh "${dir}build.sh"; done; true'
+        # set -e so a failed bake (download/extract/copy) FAILS the run instead of shipping a .b3
+        # with an empty files/app (which crashes on the printer with "No module named ...").
+        run: |
+          set -e
+          for dir in */; do
+            if [ -f "${dir}build.sh" ]; then sh "${dir}build.sh"; fi
+          done
 
       - name: Pack the plugin .b3
         run: sh scripts/pack.sh

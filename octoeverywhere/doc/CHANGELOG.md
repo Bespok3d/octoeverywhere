@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.1
+
+- Launcher now mirrors upstream's embedded service exactly: runs from the app source root with it on
+  PYTHONPATH (`cd` + `PYTHONPATH`, since start-stop-daemon cannot set env). If the app source did not
+  deploy it now fails with an actionable message in the service log (surfaced in the Captured output /
+  Install log tabs) instead of a cryptic "No module named moonraker_octoeverywhere". The version bump
+  also refreshes any cached package from an earlier build.
+
 ## 0.1.0
 
 - First release. Runs the OctoEverywhere Moonraker companion (app modules + arm64 wheels baked, pinned

@@ -25,12 +25,23 @@ file_sha256() {
 
 file_mode() { stat -f "%OLp" "$1" 2>/dev/null || stat -c "%a" "$1" 2>/dev/null; }
 
+# A plugin's Python-dep declaration (ADR-0036) lives at the plugin root, not under files/, but the
+# daemon reads it from the unpacked plugin dir to provision the venv / system-site links, so it must
+# ship in the .b3 and be listed in the manifest files[] alongside the files/ tree.
+dep_declaration_paths() {
+  plugin_dir="$1"
+  for req in requirements.txt klipper_requirements.txt; do
+    [ -f "$plugin_dir/$req" ] && printf '%s\n' "$plugin_dir/$req"
+  done
+}
+
 # LC_ALL=C forces a byte-order sort so the file list is identical regardless of locale.
 build_files_array() {
   plugin_dir="$1"
-  find "$plugin_dir/files" -type f \
-    ! -path '*/__pycache__/*' ! -name '*.pyc' ! -name '.DS_Store' \
-    | LC_ALL=C sort | while read -r fpath; do
+  { find "$plugin_dir/files" -type f \
+      ! -path '*/__pycache__/*' ! -name '*.pyc' ! -name '.DS_Store'
+    dep_declaration_paths "$plugin_dir"
+  } | LC_ALL=C sort | while read -r fpath; do
     relpath="${fpath#"$plugin_dir/"}"
     sha=$(file_sha256 "$fpath")
     mode=$(file_mode "$fpath")
@@ -39,10 +50,24 @@ build_files_array() {
   done
 }
 
+# A plugin that ships build.sh bakes its app modules into files/app (gitignored). Refuse to pack one
+# whose files/app is missing or empty: that would ship a .b3 that crashes on the printer ("No module
+# named ...") because build.sh never ran. The bake is the producer; this is the last gate before the .b3.
+assert_baked() {
+  plugin_dir="$1"
+  name="$2"
+  [ -f "$plugin_dir/build.sh" ] || return 0
+  if [ ! -d "$plugin_dir/files/app" ] || [ -z "$(ls -A "$plugin_dir/files/app" 2>/dev/null)" ]; then
+    echo "ERROR: $name ships build.sh but files/app is empty; run build.sh before packing." >&2
+    exit 1
+  fi
+}
+
 pack_one() {
   plugin_dir="$1"
   name=$(jq -r '.name' "$plugin_dir/manifest.json")
   version=$(jq -r '.version' "$plugin_dir/manifest.json")
+  assert_baked "$plugin_dir" "$name"
   output="$DIST_DIR/$name-$version.b3"
   tmp_dir=$(mktemp -d)
   files_json=$(build_files_array "$plugin_dir" | jq -s '.')
@@ -52,6 +77,9 @@ pack_one() {
     cd "$plugin_dir"
     zip -qr "$output" files/
     if [ -d doc ]; then zip -qr "$output" doc/; fi
+    for req in requirements.txt klipper_requirements.txt; do
+      [ -f "$req" ] && zip -q "$output" "$req"
+    done
     cd "$tmp_dir"
     zip -q "$output" manifest.json
   )
