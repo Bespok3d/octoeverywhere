@@ -2,6 +2,7 @@
 
 ## 0.1.1
 
+- Promoted to the stable channel: verified on a physical printer.
 - Launcher now mirrors upstream's embedded service exactly: runs from the app source root with it on
   PYTHONPATH (`cd` + `PYTHONPATH`, since start-stop-daemon cannot set env). If the app source did not
   deploy it now fails with an actionable message in the service log (surfaced in the Captured output /
