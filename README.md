@@ -9,12 +9,12 @@ a pinned tag with its LICENSE). Maintained by the Bespok3d org; contact us to cl
 
 ## Build locally
 
-Needs Node.js 20+, python3 and curl. Builds run through the shared `Bespok3d/b3-builder` tool:
+Needs Node.js 20+, python3 and curl. Builds run through the shared `Bespok3d/b3-builder` tool; `--bake`
+vendors the app modules (pinned tag) and downloads the arm64 wheels into `files/` before packing:
 
 ```sh
-sh octoeverywhere/build.sh   # vendors the app modules (pinned tag) + arm64 wheels into files/
 npm install github:Bespok3d/b3-builder
-npx b3-builder build --source ./octoeverywhere --atom-repo Bespok3d/octoeverywhere
+npx b3-builder build --source ./octoeverywhere --atom-repo Bespok3d/octoeverywhere --bake
 # -> dist/octoeverywhere-<ver>.b3 + dist/octoeverywhere.atom.json
 ```
 
