@@ -30,6 +30,25 @@
   "permissions": [
     "managed-service"
   ],
+  "bake": [
+    {
+      "class": "download",
+      "fetch": [
+        {
+          "url": "https://github.com/QuinnDamerell/OctoPrint-OctoEverywhere/archive/refs/tags/4.6.8.tar.gz",
+          "sha256": "f3d7e5198b42d33afa3842dc499ab84142589b37725ae8c725739ed36f64ce29",
+          "archive": "tar.gz",
+          "members": [
+            { "path": "OctoPrint-OctoEverywhere-4.6.8/moonraker_octoeverywhere", "dest": "files/app/moonraker_octoeverywhere" },
+            { "path": "OctoPrint-OctoEverywhere-4.6.8/octoeverywhere", "dest": "files/app/octoeverywhere" },
+            { "path": "OctoPrint-OctoEverywhere-4.6.8/linux_host", "dest": "files/app/linux_host" },
+            { "path": "OctoPrint-OctoEverywhere-4.6.8/LICENSE", "dest": "files/app/LICENSE", "mode": "0644" },
+            { "path": "OctoPrint-OctoEverywhere-4.6.8/pyproject.toml", "dest": "files/app/pyproject.toml", "mode": "0644" }
+          ]
+        }
+      ]
+    }
+  ],
   "install": {
     "service": [
       {
