@@ -2,6 +2,8 @@
   "name": "octoeverywhere",
   "title": "OctoEverywhere",
   "version": "0.1.1",
+  "sw_version": "4.6.8",
+  "author": "bespoked",
   "min_daemon_version": "0.10.33-dev",
   "description": "Free, secure remote access to your printer from anywhere, plus AI failure detection and remote notifications, via the OctoEverywhere cloud. This runs the official OctoEverywhere companion agent (a Moonraker companion) in its own isolated Python virtual environment; the app code and all its dependencies are baked into the package and installed offline, so the printer never runs pip or git. On first start the service logs a one-time link URL: open it to connect the printer to your OctoEverywhere account. OctoEverywhere is an external cloud service (free tier available); this plugin only runs the agent. Verified on a physical printer.",
   "tagline": "Free remote access + AI failure detection via the OctoEverywhere cloud.",
@@ -39,11 +41,28 @@
           "sha256": "f3d7e5198b42d33afa3842dc499ab84142589b37725ae8c725739ed36f64ce29",
           "archive": "tar.gz",
           "members": [
-            { "path": "OctoPrint-OctoEverywhere-4.6.8/moonraker_octoeverywhere", "dest": "files/app/moonraker_octoeverywhere" },
-            { "path": "OctoPrint-OctoEverywhere-4.6.8/octoeverywhere", "dest": "files/app/octoeverywhere" },
-            { "path": "OctoPrint-OctoEverywhere-4.6.8/linux_host", "dest": "files/app/linux_host" },
-            { "path": "OctoPrint-OctoEverywhere-4.6.8/LICENSE", "dest": "files/app/LICENSE", "mode": "0644" },
-            { "path": "OctoPrint-OctoEverywhere-4.6.8/pyproject.toml", "dest": "files/app/pyproject.toml", "mode": "0644" }
+            {
+              "path": "OctoPrint-OctoEverywhere-4.6.8/moonraker_octoeverywhere",
+              "dest": "files/app/moonraker_octoeverywhere"
+            },
+            {
+              "path": "OctoPrint-OctoEverywhere-4.6.8/octoeverywhere",
+              "dest": "files/app/octoeverywhere"
+            },
+            {
+              "path": "OctoPrint-OctoEverywhere-4.6.8/linux_host",
+              "dest": "files/app/linux_host"
+            },
+            {
+              "path": "OctoPrint-OctoEverywhere-4.6.8/LICENSE",
+              "dest": "files/app/LICENSE",
+              "mode": "0644"
+            },
+            {
+              "path": "OctoPrint-OctoEverywhere-4.6.8/pyproject.toml",
+              "dest": "files/app/pyproject.toml",
+              "mode": "0644"
+            }
           ]
         }
       ]
