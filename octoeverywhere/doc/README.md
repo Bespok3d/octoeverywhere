@@ -27,7 +27,7 @@ That is all. No SSH, no log digging: the setup link is captured and shown for yo
 
 The companion app source (pinned to a known release) and all of its Python dependencies (as arm64
 wheels) are baked into the package in CI. On the printer the daemon creates a per-plugin virtual
-environment and installs them offline; the printer never runs `pip` or `git` (ADR-0036). It runs in
+environment and installs them offline; the printer never runs `pip` or `git`. It runs in
 companion mode, talking to the local Moonraker on `localhost:7125`.
 
 ## Status

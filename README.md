@@ -4,7 +4,7 @@ Standalone Bespok3d plugin: runs the OctoEverywhere Moonraker companion for free
 failure detection. Solo repo: publishes a single atom into `Bespok3d/main-index`.
 
 The companion app and its dependencies are baked into the package, so the printer provisions a
-per-plugin venv offline and never runs pip or git (ADR-0036). OctoEverywhere is AGPL-3.0 (vendored at
+per-plugin venv offline and never runs pip or git. OctoEverywhere is AGPL-3.0 (vendored at
 a pinned tag with its LICENSE). Maintained by the Bespok3d org; contact us to claim it if you own it.
 
 ## Build locally
@@ -23,4 +23,5 @@ npx b3-builder build --source ./octoeverywhere --atom-repo Bespok3d/octoeverywhe
 Bump `octoeverywhere/manifest.json` `version` and push to `main`. CI runs the `Bespok3d/b3-builder`
 Action, which packs the `.b3` and cuts a release; the `register-atoms` action from
 `Bespok3d/main-index` then registers the atom. This repo contributes atoms only and publishes no list
-of its own. Secret: `MAIN_INDEX_TOKEN` (contents:write on main-index). Signing deferred.
+of its own. Secrets: `MAIN_INDEX_TOKEN` (contents:write on main-index) and `REGISTRY_SIGNING_KEY` (the
+org registry key the `b3-builder` Action signs each `.b3` and atom with).
