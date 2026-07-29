@@ -1,4 +1,13 @@
 #!/bin/sh
+# Derived from the Snapmaker U1 Extended Firmware overlay 65-app-cloud, credited upstream to
+# @QuinnDamerell. Copyright (C) the Extended Firmware contributors. Licensed under GPL-3.0-only; the
+# licence text and the provenance note are in vendor/octoeverywhere-launcher/ at the root of this
+# repository.
+#
+# Modified by the Bespok3d project on 2026-07-28: rewritten for the Bespok3d daemon's runtime layout,
+# taking the plugin venv and plugin directory as arguments and building the companion configuration
+# from them.
+#
 # Launch the OctoEverywhere Moonraker companion. $1 = the plugin's venv, $2 = the plugin dir (both
 # expanded by the daemon). The companion is a SOURCE package: it runs from its repo root (here
 # files/app) with that root on PYTHONPATH, exactly as upstream's embedded launcher does
