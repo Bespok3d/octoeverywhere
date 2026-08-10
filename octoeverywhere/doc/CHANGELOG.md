@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2
+
+- Fixes the missing **Captured output** tab the README sends you to for the one-time OctoEverywhere
+  link. The manifest now declares that this plugin's service writes output worth showing, so the store
+  offers the tab and tails the link out of the service log.
+
 ## 0.1.1
 
 - Promoted to the stable channel: verified on a physical printer.
